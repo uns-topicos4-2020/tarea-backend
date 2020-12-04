@@ -4,7 +4,7 @@ USER=rc                                           # the user to run as
 NAME="topicos4"                                   # Name of the application
 PROJECT_DIR=/home/$USER/webapps/$NAME             # Project directory
 SOURCE_DIR=$PROJECT_DIR/src                       # Source directory
-SOCKFILE=/home/$USER/webapps/$NAME/gunicorn.sock  # we will communicte using this unix socket
+SOCKFILE=$PROJECT_DIR/gunicorn.sock  # we will communicte using this unix socket
 NUM_WORKERS=1                                     # how many worker processes should Gunicorn spawn
 
 # GROUP=webapps                                     # the group to run as
