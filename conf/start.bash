@@ -25,4 +25,4 @@ test -d $RUNDIR || mkdir -p $RUNDIR
 
 # Start your Django Unicorn
 # Programs meant to be run under supervisor should not daemonize themselves (do not use --daemon)
-exec /home/$USER/.virtualenvs/$NAME/bin/uwsgi --ini $PROJECT_DIR/conf/uswgi_config.ini
+exec /home/$USER/.virtualenvs/$NAME/bin/uwsgi --ini $PROJECT_DIR/conf/uwsgi_config.ini
