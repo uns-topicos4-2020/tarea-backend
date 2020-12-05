@@ -12,10 +12,9 @@ from fabric import task, Connection, Config
 
 @task
 def deploy(local):
-    sudo_pass = getpass.getpass("[sudo] password:")
+    sudo_pass = getpass.getpass("[sudo] password: ")
     config = Config(overrides={'sudo': {'password': sudo_pass}})
 
     remote = Connection("abig", config=config)
-    remote.run("cd /home/rc/webapps/topicos4")
-    remote.run("git pull")
+    remote.run("cd /home/rc/webapps/topicos4 && git pull")
     remote.sudo("sudo supervisorctl restart topicos4")
