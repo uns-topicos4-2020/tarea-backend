@@ -1,6 +1,11 @@
-from flask import Flask, request
+import functools
+
 import psycopg2
+from flask import Flask, request
+from psycopg2.extensions import AsIs
 from psycopg2.extras import RealDictCursor
+
+from utils import CustomEncoder
 
 DB_HOST = "autogestion-dev.c66d2rypdwyt.us-east-2.rds.amazonaws.com"
 DB_NAME = "postgres"
@@ -9,6 +14,7 @@ DB_PORT = 5432
 conn = None
 cursor = None
 app = Flask(__name__)
+app.json_encoder = CustomEncoder
 
 
 @app.errorhandler(Exception)
@@ -21,6 +27,7 @@ def handle_any_error(ex):
     Returns:
         [type]: [description]
     """
+    raise
     # event_id = capture_exception(ex)
     event_id = None
 
@@ -41,8 +48,10 @@ def handle_any_error(ex):
     return response, 500
 
 
-def db(func):
+def dbconn(func):
+    @functools.wraps(func)
     def db_wrapper():
+        global conn, cursor
         user = request.get_json().get("user")
         password = request.get_json().get("password")
         conn = psycopg2.connect(
@@ -50,32 +59,34 @@ def db(func):
             user=user,
             password=password,
             host=DB_HOST,
-            port=DB_ṔORT)
+            port=DB_PORT)
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        func()
+        return func()
     return db_wrapper
 
 
 @app.route("/login", methods=['POST'])
-@db
-def hello():
-    return dict(), 200
+@dbconn
+def login():
+    return dict(xd="None")
 
 
 @app.route("/query", methods=['POST'])
+@dbconn
 def query():
     data = request.get_json()
-    resource = data.get("resource")
+    resource = f"""autogestion."{data.get('resource')}" """
     action = data.get("action")
 
     if action == "SELECT":
         cursor.execute("""
             SELECT * FROM %s
-        """, (resource, ))
+        """, (AsIs(resource), ))
         conn.commit()
         results = cursor.fetchall()
         conn.close()
-        return dict(results), 200
+        return dict(results=[dict(row) for row in results]), 200
+    return dict(), 200
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
