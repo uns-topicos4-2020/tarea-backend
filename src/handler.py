@@ -29,7 +29,6 @@ def handle_any_error(ex):
     """
     # event_id = capture_exception(ex)
     event_id = None
-    raise
 
     response = dict(
         event_id=event_id,
