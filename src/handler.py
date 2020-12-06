@@ -64,6 +64,7 @@ def hello():
 
 
 @app.route("/query", methods=['POST'])
+def query():
     data = request.get_json()
     resource = data.get("resource")
     action = data.get("action")
