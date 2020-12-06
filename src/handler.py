@@ -43,7 +43,7 @@ def handle_any_error(ex):
 
 
 def db(func):
-    def db_wrapper()
+    def db_wrapper():
         user = request.get_json().get("user")
         password = request.get_json().get("password")
         conn = psycopg2.connect(
