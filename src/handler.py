@@ -97,6 +97,7 @@ def query():
     data = request.get_json()
     resource = f"""autogestion."{data.get('resource')}" """
     action = data.get("action")
+    data = data.get("data")
 
     if action == "SELECT":
         cursor.execute("""
@@ -106,7 +107,24 @@ def query():
         results = cursor.fetchall()
         conn.close()
         return dict(results=[dict(row) for row in results]), 200
-    return dict(), 200
+
+    elif action == "INSERT":
+        columns = ", ".join([
+            f"\"{key}\"" for key in data.keys()])
+        cursor.execute("""
+            INSERT INTO %s (%s) values %s
+            RETURNING *
+        """, (
+            AsIs(resource),
+            AsIs(columns),
+            tuple(data.values())
+        ))
+        conn.commit()
+        created = cursor.fetchall()[0]
+        conn.close()
+        return dict(results=dict(created)), 200
+
+    return dict(), 400
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
