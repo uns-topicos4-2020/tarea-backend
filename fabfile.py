@@ -17,5 +17,5 @@ def deploy(local):
 
     remote = Connection("abig", config=config)
     remote.run("cd /home/rc/webapps/topicos4 && git pull")
-    remote.run("cd /home/rc/webapps/topicos4 && workon topicos4 && pip install -r requirements.txt")
+    remote.run("cd /home/rc/webapps/topicos4 && source /home/rc/.virtualenvs/topicos4/bin/activate && pip install -r requirements.txt")
     remote.sudo("sudo supervisorctl restart topicos4")
