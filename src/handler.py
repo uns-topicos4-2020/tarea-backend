@@ -27,7 +27,6 @@ def handle_any_error(ex):
     Returns:
         [type]: [description]
     """
-    raise
     # event_id = capture_exception(ex)
     event_id = None
 
