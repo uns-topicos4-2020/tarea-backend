@@ -15,7 +15,7 @@ conn = None
 cursor = None
 app = Flask(__name__)
 app.json_encoder = CustomEncoder
-
+app.debug = True
 
 @app.errorhandler(Exception)
 def handle_any_error(ex):
