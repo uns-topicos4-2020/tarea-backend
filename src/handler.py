@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.errorhandler(Exception)
 @cross_origin()
 def handle_any_error(ex):
-    """Función para manejar errores
+    """Función catch-all para manejar errores
 
     Args:
         ex ([type]): [description]
@@ -28,7 +28,7 @@ def handle_any_error(ex):
     response = dict(
         event_id=event_id,
         status_code=500,
-        message="Ocurrió un error interno. ")
+        message="Ocurrió un error interno.")
     try:
         type_ = type(ex)
         module = type_.__module__
