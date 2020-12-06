@@ -29,6 +29,7 @@ def handle_any_error(ex):
     """
     # event_id = capture_exception(ex)
     event_id = None
+    raise
 
     response = dict(
         event_id=event_id,
@@ -67,7 +68,27 @@ def dbconn(func):
 @app.route("/login", methods=['POST'])
 @dbconn
 def login():
-    return dict(xd="None")
+    user = request.get_json().get('user')
+    cursor.execute("""
+        SELECT table_name, string_agg( privilege_type, ',')
+        FROM information_schema.role_table_grants
+        where table_schema = 'autogestion'
+        and grantee = %s
+        group by table_name ;
+    """, (user,))
+    conn.commit()
+    privileges = cursor.fetchall()
+    conn.close()
+
+    response = {
+        "role": user,
+        "resources": {
+            resource: perms.split(",") for resource, perms in
+            [tuple(privilege.values()) for privilege in privileges]
+        }
+    }
+
+    return response, 200
 
 
 @app.route("/query", methods=['POST'])
