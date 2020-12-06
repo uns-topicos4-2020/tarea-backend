@@ -25,12 +25,14 @@ def db(func):
         func()
     return db_wrapper
 
+
 @app.route("/login", methods=['POST'])
+@db
 def hello():
     return dict(), 200
 
 
-@app.route("/query")
+@app.route("/query", methods=['POST'])
     data = request.get_json()
     resource = data.get("resource")
     action = data.get("action")
