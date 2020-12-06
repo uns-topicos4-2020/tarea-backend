@@ -12,7 +12,6 @@ app = Flask(__name__)
 
 
 @app.errorhandler(Exception)
-@cross_origin()
 def handle_any_error(ex):
     """Función catch-all para manejar errores
 
