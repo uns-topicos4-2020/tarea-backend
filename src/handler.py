@@ -2,6 +2,7 @@ import functools
 
 import psycopg2
 from flask import Flask, request
+from flask_cors import CORS
 from psycopg2.extensions import AsIs
 from psycopg2.extras import RealDictCursor
 
@@ -14,6 +15,7 @@ DB_PORT = 5432
 conn = None
 cursor = None
 app = Flask(__name__)
+CORS(app)
 app.json_encoder = CustomEncoder
 app.debug = True
 
