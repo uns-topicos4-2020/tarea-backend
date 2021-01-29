@@ -1,0 +1,25 @@
+[ ----- PARTICIPACIÓN DEL EQUIPO EN EL PROYECTO ----- ]
+
+Kenny Saavedra Altuna (Líder del Equipo):
+ - Diseño de Interfaces del usuario cliente Fino
+ - Estructuración de las aplicaciones
+
+Diego Baes Vásquez:
+ - Definiciones y Programación de Funcionalidades
+ - Programación del Backend del Cliente Grueso
+
+Carlos Villar Marín:
+ - Diseño y desarrollo backend Node y frontend Angular
+ - Agregado de Funciones del Backend para la seguridad
+ - Diseño e implementacion del cliente grueso
+
+Andrés Medina Charcape:
+ - Diseño y desarrollo backend Node y frontend Angular 
+ - Diseño e Implementacion de interfaces de usuario del cliente fino
+
+Richard Cotrina Alvitres:
+- Diseño e implementacion de DB Postgres
+- Desarrollo Backend en Python para clientes
+- Cliente web lector de codigo QR
+
+(La participación del equipo en el proyecto está relacionado con los conocimientos de cada uno).
